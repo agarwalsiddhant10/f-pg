@@ -1,0 +1,44 @@
+obj: aim
+dir: fetch_aim
+seed: 23
+cuda: 0
+n_itrs: 200
+eval_episodes: 100
+expert_episodes: 1
+save_interval: 100
+env:
+  env_name: FetchReachGC-v0
+  T: 50
+ppo:
+  steps_initial: 500
+  steps_per_epoch: 1000
+  num_steps_per_collect: 500
+  steps_reward_computation: 100
+  batch_size: 1024
+  gamma: 0.99
+  clip_ratio: 0.2
+  pi_lr: 3e-4
+  num_pi_updates: 30
+  vf_lr: 1e-3
+  num_vf_updates: 30
+  max_ep_len: 50
+  target_kl: 0.5
+  hidden_sizes: [256, 256]
+  no_vf: True
+  density:
+    agent:
+      bandwidth: 0.10
+      kernel: gaussian
+    expert:
+      bandwidth: 0.08
+      kernel: gaussian
+
+evaluation:
+  epochs: 100
+  random_explore_episodes: 0
+
+hydra:
+  job:
+    chdir: true
+  run: 
+    dir: ./experiments_fetch/baselines/

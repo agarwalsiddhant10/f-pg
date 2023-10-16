@@ -1,0 +1,43 @@
+obj: fkl
+dir: pointmaze
+seed: 2
+cuda: 0
+n_itrs: 600
+eval_episodes: 100
+expert_episodes: 1
+save_interval: 100
+env:
+  env_name: PointMazeUTough-v0
+  T: 200
+pg:
+  steps_initial: 3000
+  steps_per_epoch: 12000
+  num_steps_per_collect: 3000
+  steps_reward_computation: 600
+  batch_size: 1024
+  gamma: 0.99
+  clip_ratio: 0.2
+  lr: 5e-4
+  var_net: true
+  num_pi_updates: 50
+  max_ep_len: 200
+  target_kl: 0.1
+  action_reg: 1.0
+  hidden_sizes: [256, 256]
+  density:
+    agent:
+      bandwidth: 0.05
+      kernel: gaussian
+    expert:
+      bandwidth: 0.05
+      kernel: gaussian
+
+evaluation:
+  epochs: 100
+  random_explore_episodes: 0
+
+hydra:
+  job:
+    chdir: true
+  run: 
+    dir: ./experiments_viz/our/

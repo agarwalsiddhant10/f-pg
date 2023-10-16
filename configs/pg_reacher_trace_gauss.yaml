@@ -1,0 +1,48 @@
+obj: chi2
+seed: 1
+cuda: 0
+dir: reacher
+n_itrs: 50
+save_interval: 10
+task:
+  expert_samples_n: 10000
+  task_name: gaussian
+  goal:
+  - -0.21
+  - 0
+  goal_radius: 0.02
+env:
+  env_name: ReacherDraw-v0
+  T: 30
+  state_indices:
+  - 0
+  - 1
+  add_time: false
+
+pg:
+  steps_per_epoch: 30000
+  num_steps_per_collect: 3000
+  steps_reward_computation: 3000
+  batch_size: 256
+  gamma: 0.95
+  clip_ratio: 0.2
+  lr: 3e-4
+  var_net: false
+  num_pi_updates: 30
+  max_ep_len: 30
+  target_kl: 0.1
+  hidden_sizes: [256, 256]
+  density:
+    agent:
+      bandwidth: 0.03
+      kernel: gaussian
+
+evaluation:
+  epochs: 150
+  random_explore_episodes: 0
+
+hydra:
+  job:
+    chdir: true
+  run: 
+    dir: ./experiments_reacher/
